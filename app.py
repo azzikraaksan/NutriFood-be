@@ -11,7 +11,26 @@ def search_cosine_route():
     if not query:
         return jsonify({'error': 'Query is required'}), 400
     result = search_cosine(query)
-    return jsonify(result)
+
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 10))
+    total = len(result)
+    total_pages = (total // per_page) + (1 if total % per_page > 0 else 0)
+
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_result = result[start:end]
+
+    return jsonify({
+        'pagination': {
+            'page': page,
+            'per_page': per_page,
+            'total': total,
+            'total_pages': total_pages
+        },
+        'results': paginated_result
+    })
+
 
 @app.route('/search/bm25', methods=['GET'])
 def search_bm25_route():
@@ -19,7 +38,26 @@ def search_bm25_route():
     if not query:
         return jsonify({'error': 'Query is required'}), 400
     result = search_bm25(query)
-    return jsonify(result)
+
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 10))
+    total = len(result)
+    total_pages = (total // per_page) + (1 if total % per_page > 0 else 0)
+
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_result = result[start:end]
+
+    return jsonify({
+        'pagination': {
+            'page': page,
+            'per_page': per_page,
+            'total': total,
+            'total_pages': total_pages
+        },
+        'results': paginated_result
+    })
+
 
 if __name__ == '__main__':
     app.run(debug=True)
