@@ -35,6 +35,7 @@ def search_cosine(query):
         {
             'judul': datalink.iloc[i]['judul_clean'],
             'link': datalink.iloc[i]['link'],
+            'gambar': dokumen.iloc[i]['gambar'],
             'score': float(similarities[i]),
             'bahan': dokumen.iloc[i]['bahan'],
             'tahapan': dokumen.iloc[i]['tahapan'],
@@ -51,6 +52,7 @@ def search_bm25(query):
         {
             'judul': datalink.iloc[i]['judul_clean'],
             'link': datalink.iloc[i]['link'],
+            'gambar': dokumen.iloc[i]['gambar'],
             'score': float(scores[i]),
             'bahan': dokumen.iloc[i]['bahan'],
             'tahapan': dokumen.iloc[i]['tahapan'],
